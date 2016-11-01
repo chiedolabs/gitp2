@@ -5,8 +5,10 @@ Git P2 (Git parallel push) is a simple Golang script that allows you to git push
 ## Ignoring remotes
 If you don't want gitp2 to push to all your remotes, you can create a file by the name of `.gitp2ignore` in your git root directory. Each line in that file should be the name of a remote to ignore when using Gitp2.
 
-## Installation
-Coming soon.
+## Installation and Upgrading
+
+`wget -O /usr/local/bin/gitp2 https://github.com/chiedolabs/gitp2/raw/master/gitp2 && chmod +x /usr/local/bin/gitp2
+`
 
 ## Usage
 Run `gitp2` in your root git directory.
@@ -16,6 +18,11 @@ Run `gitp2` in your root git directory.
 - Git clone this repo into your Gopath.
 - Make changes
 - Run `go build`
+
+#### Testing
+
+- Run `go build`
+- Try to push your changes using `./gitp2`
 
 ## Support
 
