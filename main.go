@@ -26,7 +26,7 @@ func stringInSlice(a string, list []string) bool {
 }
 
 func main() {
-
+	fmt.Println("\n============GIT PARALLEL PUSH=============")
 	var ignore = []string{}
 
 	// Eventually use this to make sure we're in the root directory
@@ -42,11 +42,9 @@ func main() {
 	}
 	os.Chdir(string(out))
 
-	fmt.Println(os.Getwd())
-
 	// Set up the ignores array for git remotes to ignore
 	fmt.Println("\nDeciding which remotes to ignore")
-	fmt.Println("===============================================")
+	fmt.Println("===============================================\n")
 	gitIgnore, _ := os.Open(".gitp2ignore")
 	defer gitIgnore.Close()
 	scanner1 := bufio.NewScanner(gitIgnore)
@@ -59,8 +57,6 @@ func main() {
 	}
 
 	// Set up the remotes array for git remotes to push to
-	fmt.Println("\nGetting ready to git push to all remaining remotes")
-	fmt.Println("===============================================")
 	gitConfig, _ := os.Open(".git/config")
 	defer gitConfig.Close()
 	scanner2 := bufio.NewScanner(gitConfig)
@@ -102,13 +98,11 @@ func main() {
 func git_push(remote string) {
 	// Decrement the counter when the goroutine completes.
 	defer wg.Done()
-	cmd := exec.Command("git", "push", remote, " master")
+	cmd := exec.Command("git", "push", remote, "master")
 
-	//cmd.Stdout = os.Stdout
-	//cmd.Stderr = os.Stderr
-	out, outErr := cmd.Output()
+	out, outErr := cmd.CombinedOutput()
 
-	fmt.Printf("\nOutput for pushing to " + remote)
+	fmt.Printf("\n\nOutput for pushing to " + remote)
 	fmt.Printf("\n=================================\n")
 
 	if outErr != nil {
