@@ -1,6 +1,6 @@
 # Git P2 (Beta)
 
-Git P2 (Git parallel push) is a command line utility written in Go that allows you to git push to multiple remotes at the same time and in parallel as opposed to needing to wait for each git push to happen sequentially as it does when you put many remotes under one origin.
+Git P2 (Git parallel push) is a command line utility written in Go that allows you to git push to multiple remotes at the same time and in parallel as opposed to needing to wait for each git push to happen sequentially as it does when you put many urls under one remote.
 
 This is extremely useful if you manage many versions of the same app for different clients on Heroku and/or Dokku.
 
