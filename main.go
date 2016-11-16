@@ -26,6 +26,7 @@ func stringInSlice(a string, list []string) bool {
 }
 
 func main() {
+	start := time.Now()
 	fmt.Println("\n============GIT PARALLEL PUSH=============")
 	var ignore = []string{}
 
@@ -92,6 +93,8 @@ func main() {
 	// Wait for all git pushes to complete
 	wg.Wait()
 	ticker.Stop()
+	elapsed := time.Since(start)
+	fmt.Printf("Your scripts took %f seconds", elapsed.Seconds())
 	fmt.Println("\n\nAll done.")
 }
 
