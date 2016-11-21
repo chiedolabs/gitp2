@@ -57,8 +57,14 @@ func main() {
 		ignore = append(ignore, scanner1.Text())
 	}
 
+	// Allow the overidding of the git config file if desired
+	configFile := ".git/config"
+	if len(os.Args) > 0 {
+		configFile = os.Args[1]
+	}
+
 	// Set up the remotes array for git remotes to push to
-	gitConfig, _ := os.Open(".git/config")
+	gitConfig, _ := os.Open(configFile)
 	defer gitConfig.Close()
 	scanner2 := bufio.NewScanner(gitConfig)
 	scanner2.Split(bufio.ScanLines)
