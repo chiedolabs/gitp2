@@ -9,7 +9,7 @@ If you don't want gitp2 to push to all your remotes, you can create a file by th
 
 ## Installation and Upgrading
 
-`wget -O /usr/local/bin/gitp2 https://github.com/chiedolabs/gitp2/raw/master/gitp2 && chmod +x /usr/local/bin/gitp2
+`wget -O /usr/local/bin/gitp2 https://github.com/chiedolabs/gitp2/raw/master/gitp2?date=$(date +%s) && chmod +x /usr/local/bin/gitp2
 `
 
 ## Usage
