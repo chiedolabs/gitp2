@@ -112,5 +112,4 @@ func git_push(remote string) {
 	cmd.Stderr = os.Stderr
 
 	cmd.Run()
-
 }
