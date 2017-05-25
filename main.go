@@ -46,6 +46,7 @@ func main() {
 	// Set up the ignores array for git remotes to ignore
 	fmt.Println("\nDeciding which remotes to ignore")
 	fmt.Println("===============================================\n")
+	//TODO: Display the remotes that will be used
 	gitIgnore, _ := os.Open(".gitp2ignore")
 	defer gitIgnore.Close()
 	scanner1 := bufio.NewScanner(gitIgnore)
