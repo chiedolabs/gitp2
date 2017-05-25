@@ -100,16 +100,20 @@ func main() {
 	wg.Wait()
 	ticker.Stop()
 	elapsed := time.Since(start)
+	//TODO: Make this green
 	fmt.Printf("Your scripts took %f seconds", elapsed.Seconds())
-	fmt.Println("\n\nAll done.")
+	fmt.Println("\n\nALL DONE.")
 }
 
 func git_push(remote string) {
 	// Decrement the counter when the goroutine completes.
 	defer wg.Done()
 	cmd := exec.Command("git", "push", remote, "master")
+	//TODO: Figure out how to make this prefix each line with the remote name
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
+
+	//TODO: Store the errors for each app in some array that we can output when we call ALL DONE
 
 	cmd.Run()
 }
