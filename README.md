@@ -23,8 +23,7 @@ Run `gitp2` in your root git directory.
 
 #### Testing
 
-- Run `go build`
-- Try to push your changes using `./gitp2`
+- Run `go run main.go`
 
 ## Support
 

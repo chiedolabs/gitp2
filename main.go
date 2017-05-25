@@ -59,7 +59,7 @@ func main() {
 
 	// Allow the overidding of the git config file if desired
 	configFile := ".git/config"
-	if len(os.Args) > 0 {
+	if len(os.Args) > 1 {
 		configFile = os.Args[1]
 	}
 
@@ -108,15 +108,10 @@ func git_push(remote string) {
 	// Decrement the counter when the goroutine completes.
 	defer wg.Done()
 	cmd := exec.Command("git", "push", remote, "master")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 
-	out, outErr := cmd.CombinedOutput()
+	fmt.Println("\n")
+	cmd.Start()
 
-	fmt.Printf("\n\nOutput for pushing to " + remote)
-	fmt.Printf("\n=================================\n")
-
-	if outErr != nil {
-		fmt.Printf(outErr.Error() + "\n")
-	} else {
-		fmt.Printf(string(out) + "\n")
-	}
 }
