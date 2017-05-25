@@ -111,7 +111,6 @@ func git_push(remote string) {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	fmt.Println("\n")
-	cmd.Start()
+	cmd.Run()
 
 }
