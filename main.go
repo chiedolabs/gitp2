@@ -32,8 +32,6 @@ func main() {
 	/////////////////////////////////////////////////
 	boldGreen := color.New(color.FgGreen, color.Bold)
 	boldWhite := color.New(color.FgWhite, color.Bold)
-	//boldBlue := color.New(color.FgBlue, color.Bold)
-	//boldRed := color.New(color.FgRed, color.Bold)
 
 	start := time.Now()
 	boldWhite.Println("\n============GIT PARALLEL PUSH=============")
@@ -92,12 +90,17 @@ func main() {
 			}
 		}
 	}
+	var colors [4]*color.Color
+	colors[0] = color.New(color.FgYellow)
+	colors[1] = color.New(color.FgBlue)
+	colors[2] = color.New(color.FgCyan)
+	colors[3] = color.New(color.FgMagenta)
 
 	// Need to make this use go routines
-	for _, remote := range remotes {
+	for i, remote := range remotes {
 		// Increment the WaitGroup counter.
 		wg.Add(1)
-		go git_push(remote)
+		go git_push(remote, colors[i%4])
 	}
 
 	//Show output as running
@@ -110,7 +113,7 @@ func main() {
 	boldGreen.Printf("\n\nYour scripts took %f seconds\n\n", elapsed.Seconds())
 }
 
-func git_push(remote string) {
+func git_push(remote string, thisColor *color.Color) {
 	// Decrement the counter when the goroutine completes.
 	defer wg.Done()
 	cmd := exec.Command("git", "push", remote, "master")
@@ -127,11 +130,13 @@ func git_push(remote string) {
 	errIn := bufio.NewScanner(stderr)
 
 	for errIn.Scan() {
-		fmt.Printf("\n" + remote + ": " + errIn.Text())
+		thisColor.Printf("\n" + remote + ": ")
+		fmt.Printf(errIn.Text())
 	}
 
 	for outIn.Scan() {
-		fmt.Printf("\n" + remote + ": " + outIn.Text())
+		thisColor.Printf("\n" + remote + ": ")
+		fmt.Printf(outIn.Text())
 	}
 
 	cmd.Wait()
