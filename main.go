@@ -117,11 +117,11 @@ func git_push(remote string) {
 	errIn := bufio.NewScanner(stderr)
 
 	for errIn.Scan() {
-		fmt.Printf(remote + ": " + errIn.Text())
+		fmt.Printf("\n" + remote + ": " + errIn.Text())
 	}
 
 	for outIn.Scan() {
-		fmt.Printf(remote + ": " + outIn.Text())
+		fmt.Printf("\n" + remote + ": " + outIn.Text())
 	}
 
 	cmd.Wait()
