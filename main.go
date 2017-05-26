@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/fatih/color"
 	"os"
 	"os/exec"
 	"regexp"
@@ -26,8 +27,16 @@ func stringInSlice(a string, list []string) bool {
 }
 
 func main() {
+	/////////////////////////////////////////////////
+	// PREPARE SOME OUTPUT COLORS
+	/////////////////////////////////////////////////
+	boldGreen := color.New(color.FgGreen, color.Bold)
+	boldWhite := color.New(color.FgWhite, color.Bold)
+	//boldBlue := color.New(color.FgBlue, color.Bold)
+	//boldRed := color.New(color.FgRed, color.Bold)
+
 	start := time.Now()
-	fmt.Println("\n============GIT PARALLEL PUSH=============")
+	boldWhite.Println("\n============GIT PARALLEL PUSH=============")
 	var ignore = []string{}
 
 	// Eventually use this to make sure we're in the root directory
@@ -44,9 +53,6 @@ func main() {
 	os.Chdir(string(out))
 
 	// Set up the ignores array for git remotes to ignore
-	fmt.Println("\nDeciding which remotes to ignore")
-	fmt.Println("===============================================\n")
-	//TODO: Display the remotes that will be used
 	gitIgnore, _ := os.Open(".gitp2ignore")
 	defer gitIgnore.Close()
 	scanner1 := bufio.NewScanner(gitIgnore)
@@ -56,6 +62,11 @@ func main() {
 		fmt.Println("The " + scanner1.Text() + " remote will be ignored.")
 		// Add the name of this remote to the list of remotes to ignore
 		ignore = append(ignore, scanner1.Text())
+	}
+
+	// Display if any remotes will be ignored
+	if len(ignore) == 0 {
+		fmt.Println("\nNo remotes will be ignored")
 	}
 
 	// Allow the overidding of the git config file if desired
@@ -96,8 +107,7 @@ func main() {
 	wg.Wait()
 	ticker.Stop()
 	elapsed := time.Since(start)
-	//TODO: Make this green
-	fmt.Printf("\n\nYour scripts took %f seconds\n\n", elapsed.Seconds())
+	boldGreen.Printf("\n\nYour scripts took %f seconds\n\n", elapsed.Seconds())
 }
 
 func git_push(remote string) {
