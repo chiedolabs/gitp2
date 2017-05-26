@@ -91,30 +91,39 @@ func main() {
 
 	//Show output as running
 	ticker := time.NewTicker(time.Millisecond * 500)
-	go func() {
-		for range ticker.C {
-			fmt.Printf(".")
-		}
-	}()
 
 	// Wait for all git pushes to complete
 	wg.Wait()
 	ticker.Stop()
 	elapsed := time.Since(start)
 	//TODO: Make this green
-	fmt.Printf("Your scripts took %f seconds", elapsed.Seconds())
-	fmt.Println("\n\nALL DONE.")
+	fmt.Printf("\n\nYour scripts took %f seconds\n\n", elapsed.Seconds())
 }
 
 func git_push(remote string) {
 	// Decrement the counter when the goroutine completes.
 	defer wg.Done()
 	cmd := exec.Command("git", "push", remote, "master")
-	//TODO: Figure out how to make this prefix each line with the remote name
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
+	// Prefix each line with the remote name and output
 
-	//TODO: Store the errors for each app in some array that we can output when we call ALL DONE
+	stdout, _ := cmd.StdoutPipe()
+	stderr, _ := cmd.StderrPipe()
 
-	cmd.Run()
+	// start the command after having set up the pipe
+	cmd.Start()
+
+	// read command's stdout line by line
+	outIn := bufio.NewScanner(stdout)
+	errIn := bufio.NewScanner(stderr)
+
+	for errIn.Scan() {
+		fmt.Printf(remote + ": " + errIn.Text())
+	}
+
+	for outIn.Scan() {
+		fmt.Printf(remote + ": " + outIn.Text())
+	}
+
+	cmd.Wait()
+
 }
