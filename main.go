@@ -124,6 +124,8 @@ func git_push(remote string) {
 		fmt.Printf("\n" + remote + ": " + outIn.Text())
 	}
 
+	//delete me
+
 	cmd.Wait()
 
 }
